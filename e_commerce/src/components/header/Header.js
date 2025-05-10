@@ -1,86 +1,109 @@
 'use client'
 import Link from 'next/link';
 import React, { useState } from 'react'
-import { FaCartShopping } from "react-icons/fa6";
-import styles from './header.module.css'
+import {Menu, Home, LogIn,UserPlus, Laptop, Smartphone, Cable, Headphones, ChevronDown, Zap, TabletIcon, X} from 'lucide-react'
+
 const Header = () => {
-    const [active, setActive] = useState('Home')
-    const [dropDown, setDropDown] = useState(false)
-    const toggleDropDown = () => {setDropDown(!dropDown)}
+    const [isActive, setIsActive] = useState('/')
+    const [isDropDownOpen, setIsDropDownOpen] = useState(false)
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const toggleDropDownState = () => setIsDropDownOpen(!isDropDownOpen)
     return (
-        <header className='p-3 px-20 shadow-lg fixed top-0 w-full z-50 bg-white '>
-            <nav className='container-fluid flex justify-between items-center'>
-                <div className='left-nav flex gap-40'>
-                    <div className='flex justify-center items-center'>
-                        <Link onClick={() => {
-                                setActive('Home')
-                                setDropDown(false)
-                            }}  href={'/'} className='flex items-center justify-center gap-1 text-2xl font-semibold'>
-                            <FaCartShopping className='text-green-600'/>
-                            <span className={styles.logo}>FreshCart</span>
-                            </Link>
+        <header className=' shadow-md py-4'>
+            <nav className='flex flex-col md:flex-row gap-8 justify-between items-center px-10'>
+                <div className='left flex items-center justify-between  w-full'>
+                    <div>
+                        <Link href={'/'} onClick={
+                            () => setIsActive('/')
+                        } className='flex items-center gap-1.5'>
+                            <div className='bg-gradient-to-r from-blue-700 to-gray-800 p-1.5 rounded-lg'>
+                                <Zap className='text-white' />
+                            </div>
+                            <span className='text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-blue-700'>TechHub</span>
+                        </Link>
                     </div>
-                    <div className='flex gap-15 justify-center items-center'>
-                        <div>
-                            <Link href={'/'} onClick={() => {
-                                setActive('Home')
-                                setDropDown(false)
-                            }}
-                            className={`px-4 py-2 rounded-lg text-xl ${active === 'Home' ? 'bg-green-600 text-white shadow-md' : ''}`}>Home</Link>
-                        </div>
-                        <div>
-                            <Link href={'/products'} onClick={() => {
-                                setActive('products')
-                                setDropDown(false)
-                            }} 
-                                className={`px-4 py-2 rounded-lg text-xl ${active === 'products' ? 'bg-green-600 text-white shadow-md' : ''}`}>Products</Link>
-                        </div>
-                        <div className='relative'>
-                            <button onClick={toggleDropDown} className={`pointer px-4 py-2 rounded-lg text-xl ${active === 'categories' ? 'bg-green-600 text-white shadow-md' : ''}`}>Categories</button>
-                            {dropDown && (
-                                <div className='absolute top-10 p-3.5 bg-white shadow-sm w-40 rounded-lg'>
-                                    <ul className='flex flex-col gap-2'>
-                                        <li  onClick={() => {
-                                            setActive('categories')
-                                            setDropDown(false)
-                                            }} className='hover:bg-gray-100 px-2 py-1 rounded-md'><Link href={'/phones'}>Smart Phones</Link></li>
-                                        <li  onClick={() => {
-                                            setActive('categories')
-                                            setDropDown(false)
-                                            }} className='hover:bg-gray-100 px-2 py-1 rounded-md'><Link href={'/laptops'}>Laptops</Link></li>
-                                        <li  onClick={() => {
-                                            setActive('categories')
-                                            setDropDown(false)
-                                            }} className='hover:bg-gray-100 px-2 py-1 rounded-md'><Link href={'/tablets'}>Tablets</Link></li>
-                                    </ul>
-                                </div>
-                            )}
-                        </div>
-                        <div>
-                        <Link href={'/contact'} onClick={() => {
-                                setActive('contact')
-                                setDropDown(false)
-                            }} 
-                                className={`px-4 py-2 rounded-lg text-xl ${active === 'contact' ? 'bg-green-600 text-white shadow-md' : ''}`}>ContactUs</Link>
-                        </div>
+                    <div onClick={() => setIsMenuOpen(!isMenuOpen)} className=' md:hidden cursor-pointer'>
+                        {isMenuOpen ? <X size={35} className='text-gray-700'/> : 
+                            <Menu className='text-gray-700' size={35} />}
                     </div>
                 </div>
-                <div className='right-nav flex gap-4 justify-between items-center'>
-                    <div>
-                        <Link onClick={() => {
-                            setActive('login')
-                            setDropDown(false)
-                        }
-                    }  href={'/login'}
-                        className={`px-4 py-2 rounded-lg text-xl ${active === 'login' ? 'bg-green-600 text-white shadow-md' : ''}`}>Login</Link>
+
+                <div className={`right md:flex flex-col md:flex-row items-center gap-5  ${isMenuOpen ? '' : 'hidden'} `}>
+                    <div className={` ${isActive === '/' ? 'bg-gradient-to-r from-blue-600 to-blue-700 shadow-md' : ''} rounded-lg `}>
+                        <Link href={'/'} onClick={
+                            () => setIsActive('/')
+                        } className={`text-md font-bold flex gap-1 p-2  ${isActive === '/' ? 'text-white' : ''}`}>
+                            <div>
+                                <Home size = {20} />
+                            </div>
+                            Home
+                        </Link>
                     </div>
-                    <div className=''>
-                        <Link href={'/register'} onClick={() => {
-                            setActive('register')
-                            setDropDown(false)
-                        }}
-                        className={`px-4 py-2 rounded-lg text-xl ${active === 'register' ? 'bg-green-600 text-white shadow-md' : ''}`}>Register</Link>
-                        
+                    <div className={` ${isActive === 'products' ? 'bg-gradient-to-r from-blue-600 to-blue-700 shadow-md' : ''} rounded-lg `}>
+                        <Link href={'/products'} onClick={
+                            () => setIsActive('products')
+                        } className={`text-md font-bold flex gap-1 p-2  ${isActive === 'products' ? 'text-white' : ''}`}>
+                            <div>
+                            </div>
+                            Products
+                        </Link>
+                    </div>
+                    <div onMouseEnter={() =>setIsDropDownOpen(true)}
+                        onMouseLeave={() =>setIsDropDownOpen(false)}  
+                        className={` ${isActive === 'categories' ? 'bg-gradient-to-r from-blue-600 to-blue-700 shadow-md text-white' : ''} rounded-lg relative`}>
+                        <button onClick={toggleDropDownState}
+                        className= {`flex text-md font-bold p-2   cursor-pointer ${isActive === 'categories' ? 'text-white' : ''}`}>
+                            Categories <ChevronDown className={`transition-transform duration-200 ${isDropDownOpen ? 'rotate-180' : ''}`}/>
+                        </button>
+                        {isDropDownOpen && (
+                        <ul className={`flex flex-col gap-2.5 p-3 rounded-lg absolute bg-white shadow-sm`}>
+                            <li onClick={() => setIsActive('categories')}>
+                                <Link href={'/phones'} onClick={() => setIsActive('category')} className='flex items-center text-black  hover:text-blue-600 cursor-pointer gap-1'>
+                                    <Smartphone size = {18} />
+                                    SmartPhone
+                                </Link>
+                            </li>
+
+                            <li onClick={() => setIsActive('categories')}>
+                                <Link href={'/laptops'} onClick={() => setIsActive('category')} className='flex items-center text-black  hover:text-blue-600 cursor-pointer gap-1'>
+                                    <Laptop size = {18} />
+                                    Laptops
+                                </Link>
+                            </li>
+                            <li onClick={() => setIsActive('categories')}>
+                                <Link href={'/tablets'} className='flex  items-center text-black hover:text-blue-600  cursor-pointer gap-1'>
+                                <TabletIcon size = {18} />
+                                Tablets
+                                </Link>
+                            </li>
+                            <li onClick={() => setIsActive('categories')}>
+                                <Link href={'/accessories'} className='flex  items-center text-black hover:text-blue-600  cursor-pointer gap-1'>
+                                <Cable size = {18} />
+                                Accessories
+                                </Link>
+                            </li>
+                        </ul>
+                        )}
+                    </div>
+                    <div className={` ${isActive === 'login' ? 'bg-gradient-to-r from-blue-600 to-blue-700 shadow-md' : ''} rounded-lg `}>
+                        <Link href={'/login'} onClick={
+                            () => setIsActive('login')
+                        } className={`text-md font-bold flex gap-1 p-2 items-center  ${isActive === 'login' ? 'text-white' : ''}`}>
+                            <div>
+                                <LogIn size = {18} />
+                            </div>
+                            LogIn
+                        </Link>
+                    </div>
+                    <div className={` ${isActive === 'register' ? 'bg-gradient-to-r from-blue-600 to-blue-700 shadow-md' : ''} rounded-lg `}>
+                        <Link href={'/register'} onClick={
+                            () => setIsActive('register')
+                        } className={`text-md font-bold flex gap-1 p-2 items-center  ${isActive === 'register' ? 'text-white' : ''}`}>
+                            <div>
+                                <UserPlus size={18} />
+                            </div>
+                            Register
+                        </Link>
                     </div>
                 </div>
             </nav>
